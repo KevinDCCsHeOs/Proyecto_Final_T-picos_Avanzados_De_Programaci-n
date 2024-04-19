@@ -133,12 +133,12 @@ create table Reservaciones(
     folioEmpleado int,
     numeroFactura int,
     cveUsuario int,
-    foreign key (cveMDT) references MediosDeTransporte(cveMDT),
     foreign key (cveHora) references HorariosSalida(cveHora),
     foreign key (cveLugar) references Terminal(cveLugar),
     foreign key (cveCosto) references Costo(cveCosto),
     foreign key (cveRuta) references Rutas(cveRuta),
     foreign key (folioEmpleado) references Empleado(folioEmpleado),
-    foreign key (numeroFactura) references Factura(numeroFactura),
-    foreign key (cveUsuario) references Usuarios(cveUsuario)
+    foreign key (numeroFactura) references Facturas(numeroFactura),
+    foreign key (cveUsuario) references Usuarios(cveUsuario),
+    foreign key (cveMDT) references MediosDeTransporte(cveMDT)
     );
