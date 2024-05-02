@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Prueba;
+package InterfacesGraficas;
 
+import AgregarDatosBD.UsuarioDAO;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 
@@ -97,6 +98,11 @@ public class Login extends javax.swing.JFrame {
                 LoginJButton3MouseClicked(evt);
             }
         });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3);
         jPanel1.add(jLabel11);
         jPanel1.add(jLabel12);
@@ -140,7 +146,13 @@ public class Login extends javax.swing.JFrame {
     private void LoginJButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginJButton3MouseClicked
         // TODO add your handling code here:
         UsuarioDAO us = new UsuarioDAO();
-        JOptionPane.showMessageDialog(null,us.buscarUsuarioCC(jTextField1.getText(), jPasswordField1.getText()).toString());
+        us.setUsuario(us.buscarUsuarioCP(jTextField1.getText(), jPasswordField1.getText()));
+        if (us.getUsu() != null) {
+            JOptionPane.showMessageDialog(null,us.getUsu().toString());
+        } else {
+          JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+        }
+
     }//GEN-LAST:event_LoginJButton3MouseClicked
 
     private void jButton1CrearCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1CrearCuentaMouseClicked
@@ -149,7 +161,12 @@ public class Login extends javax.swing.JFrame {
         agUs.setVisible(true);
         agUs.setLocationRelativeTo(null);
         agUs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
     }//GEN-LAST:event_jButton1CrearCuentaMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

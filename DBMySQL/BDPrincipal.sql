@@ -142,3 +142,4 @@ create table Reservaciones(
     foreign key (cveUsuario) references Usuarios(cveUsuario),
     foreign key (cveMDT) references MediosDeTransporte(cveMDT)
     );
+	

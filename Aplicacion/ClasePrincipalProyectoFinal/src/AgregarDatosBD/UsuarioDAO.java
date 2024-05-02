@@ -1,5 +1,6 @@
-package Prueba;
+package AgregarDatosBD;
 
+import TablasDB.Usuario;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -8,10 +9,11 @@ public class UsuarioDAO {
     private static final String URL = "jdbc:mysql://127.0.0.1:3306/basededatosprincipal?user=root";
     private static final String USER = "root";
     private static final String PASSWORD = "R4ns0mw4r3";
+    private Usuario usu;
 
     public void crearUsuario(Usuario usuario) {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = "INSERT INTO usuarios (direccionCorreoElectronico,nombre,apellidos,telefono,contraseña) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Usuarios (direccionCorreoElectronico,nombre,apellidos,telefono,contraseña) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setString(1, usuario.getDireccionCorreoElectronico());
             statement.setString(2, usuario.getNombre());
@@ -25,7 +27,7 @@ public class UsuarioDAO {
         }
     }
 
-    public Usuario buscarUsuarioCC(String correoElectronico, String contraseña) {
+    public Usuario buscarUsuarioCP(String correoElectronico, String contraseña) {
         Usuario usuario = null;
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             String query = "SELECT * FROM Usuarios WHERE direccionCorreoElectronico = ? AND  contraseña = ?";
@@ -35,6 +37,7 @@ public class UsuarioDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 usuario = new Usuario(
+                        resultSet.getInt("cveUsuario"),
                     resultSet.getString("direccionCorreoElectronico"),
                     resultSet.getString("nombre"),
                     resultSet.getString("apellidos"),
@@ -94,7 +97,7 @@ public class UsuarioDAO {
 
     public void actualizarUsuario(Usuario usuario) {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = "UPDATE usuarios SET Nombre = ?, Apellidos = ?, Contraseña = ? WHERE direccionCorreoElectronico = ?";
+            String query = "UPDATE Usuarios SET Nombre = ?, Apellidos = ?, Contraseña = ? WHERE direccionCorreoElectronico = ?";
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setString(1, usuario.getNombre());
             statement.setString(2, usuario.getApellidos());
@@ -116,4 +119,13 @@ public class UsuarioDAO {
             e.printStackTrace();
         }
     }
+    
+    public void setUsuario(Usuario us){
+        usu = us;
+    }
+    
+    public Usuario getUsu(){
+        return usu;
+    }
+    
 }

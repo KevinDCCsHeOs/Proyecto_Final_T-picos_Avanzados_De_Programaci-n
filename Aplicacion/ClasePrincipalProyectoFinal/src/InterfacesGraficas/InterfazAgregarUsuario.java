@@ -2,7 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Prueba;
+package InterfacesGraficas;
+
+import AgregarDatosBD.UsuarioDAO;
+import TablasDB.Usuario;
+import javax.swing.JFrame;
 
 /**
  *
@@ -201,6 +205,11 @@ public class InterfazAgregarUsuario extends javax.swing.JFrame {
 
     private void SalirJButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalirJButton2MouseClicked
         // TODO add your handling code here:
+        Login l =  new Login();
+        l.setVisible(true);
+        l.setLocationRelativeTo(null);
+        l.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        l.setResizable(false);
         this.dispose();
     }//GEN-LAST:event_SalirJButton2MouseClicked
 

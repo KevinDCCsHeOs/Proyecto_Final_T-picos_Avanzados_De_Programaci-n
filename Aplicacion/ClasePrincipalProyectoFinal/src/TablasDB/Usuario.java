@@ -1,12 +1,22 @@
-package Prueba;
+package TablasDB;
 
 public class Usuario {
     
+    private int cveUsuario;
     private String direccionCorreoElectronico;
     private String nombre;
     private String apellidos;
     private String contraseña;
     private String telefono;
+
+    public Usuario(int cveUsuario, String direccionCorreoElectronico, String nombre, String apellidos, String contraseña, String telefono) {
+        this.cveUsuario = cveUsuario;
+        this.direccionCorreoElectronico = direccionCorreoElectronico;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.contraseña = contraseña;
+        this.telefono = telefono;
+    }
     
     public Usuario(String direccionCorreoElectronico, String nombre, String apellidos, String telefono, String contraseña) {
         this.direccionCorreoElectronico = direccionCorreoElectronico;
@@ -14,6 +24,10 @@ public class Usuario {
         this.apellidos = apellidos;
         this.telefono = telefono;
         this.contraseña = contraseña;
+    }
+
+    public int getCveUsuario() {
+        return cveUsuario;
     }
     
     public String getDireccionCorreoElectronico() {
@@ -57,7 +71,7 @@ public class Usuario {
     }
     
     public String toString(){
-        return "Correo electronico = " + direccionCorreoElectronico + " Nombre = " + nombre + 
+        return "cveUsuario = " + cveUsuario + " Correo electronico = " + direccionCorreoElectronico + " Nombre = " + nombre + 
                 " Apellidos = " + apellidos + " telefono = " + telefono + " contraseña = " + contraseña;
     }
     
