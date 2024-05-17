@@ -114,6 +114,43 @@ public class EmpleadoDAO {
         return empleado;
     }
     
+    public Empleado buscarEmpleadoCP(String correoElectronico, String contraseña) {
+        Empleado empleado = null;
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            String query = "SELECT * FROM Empleado WHERE correoElectronico = ? AND contraseña = ?";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, correoElectronico);
+            statement.setString(2, contraseña);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                empleado = new Empleado(
+                        resultSet.getInt("cveUsuario"),
+                        resultSet.getString("nombre"),
+                        resultSet.getString("apellidos"),
+                        resultSet.getString("correoElectronico"),
+                        resultSet.getString("telefono"),
+                        resultSet.getString("oficina"),
+                        resultSet.getString("departamento"),
+                        resultSet.getString("tipoContrato"),
+                        resultSet.getString("estado"),
+                        resultSet.getString("ciudad"),
+                        resultSet.getString("calle"),
+                        resultSet.getInt("codigoPostal"),
+                        resultSet.getString("fechaDeNacimiento"),
+                        resultSet.getString("puestoDeTrabajo"),
+                        resultSet.getString("genero"),
+                        resultSet.getInt("sueldo"),
+                        resultSet.getString("curp"),
+                        resultSet.getString("rfc"),
+                        resultSet.getString("contraseña")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return empleado;
+    }
+    
     public void actualizarEmpleado(String correoElectronico){
         Empleado empleado = buscarEmpleadoC(correoElectronico);
         if(empleado == null)
@@ -122,7 +159,7 @@ public class EmpleadoDAO {
         else{
             try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
                 String query = "UPDATE Empleado SET telefono = ?, oficina = ?, departamento = ?, tipoContrato = ?, estado = ?,"
-                        + " ciudad = ?, calle = ?, codigoPostal = ?, puestoDeTrabajo = ?, sueldo = ?"
+                        + " ciudad = ?, calle = ?, codigoPostal = ?, puestoDeTrabajo = ?, sueldo = ?, contraseña = ?"
                         + " WHERE correoElectronico = ?";
                 PreparedStatement statement = conn.prepareStatement(query);
                 String cosa;
@@ -219,7 +256,21 @@ public class EmpleadoDAO {
                     cosa = JOptionPane.showInputDialog("Sueldo");
                     statement.setInt(10, Integer.parseInt(cosa));
                 }
-                statement.setString(11, empleado.getCorreoElectronico());
+                cosa=JOptionPane.showInputDialog("Dame la contraseña");
+                if(!cosa.equals(empleado.getContraseña())){
+                    return;
+                }
+                sel = (String) JOptionPane.showInputDialog(null, 
+                "Selecciona una opcion si deseas mantener la contraseña o quieres cambiarla:", 
+                "Menú desplegable", JOptionPane.QUESTION_MESSAGE, null, op, op[0]);
+                if(sel.equals("Mantener"))
+                    statement.setString(11, empleado.getContraseña());
+                else{
+                    cosa = JOptionPane.showInputDialog("Contraseña");
+                    statement.setString(11, cosa);
+                }
+                statement.setString(12, empleado.getCorreoElectronico());
+                
                 statement.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Se ha actualizado con exito", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException e) {
@@ -237,6 +288,9 @@ public class EmpleadoDAO {
                 String query = "DELETE FROM Empleado WHERE direccionCorreoElectronico = ?";
                 PreparedStatement statement = conn.prepareStatement(query);
                 statement.setString(1, correoElectronico);
+                String cont = JOptionPane.showInputDialog("Dame la contraseña para confirmar la eliminacion del empleado");
+                if(!cont.equals(empleado.getContraseña()))
+                    return;
                 statement.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Empleado eliminado correctamente", "Empleado eliminado", JOptionPane.INFORMATION_MESSAGE);
             }catch(SQLException e){

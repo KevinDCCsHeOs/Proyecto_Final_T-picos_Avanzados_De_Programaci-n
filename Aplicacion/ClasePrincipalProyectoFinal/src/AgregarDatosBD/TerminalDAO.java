@@ -2,11 +2,8 @@ package AgregarDatosBD;
 
 import TablasDB.*;
 
-public class TerminalDAO implements PrincipalConexion{
+public class TerminalDAO {
 
-    @Override
-    public void agregar(Object obj) {
-        
-    }
+    
     
 }
